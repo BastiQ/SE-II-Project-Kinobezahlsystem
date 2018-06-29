@@ -8,24 +8,20 @@ import javax.swing.JDialog;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import de.uni_hamburg.informatik.swt.se2.kino.materialien.Vorstellung;
-import de.uni_hamburg.informatik.swt.se2.kino.werkzeuge.platzverkauf.PlatzVerkaufsWerkzeug;
-
 public class BarzahlungsWerkzeug
 {
     private BarzahlungsWerkzeugUI barUI;
     private int preis = 0;
-    private boolean success = false;
-    private boolean isFinished = false;
+    private boolean _success = false;
 
-    private PlatzVerkaufsWerkzeug _pvw;
-    private Vorstellung _vorstellung;
-
-    public BarzahlungsWerkzeug(int preis, PlatzVerkaufsWerkzeug pvw, Vorstellung vorstellung)
+    /**
+     * Konstruktor für das Barzahlungswerkzeug. Erstellt neues UI Fenster, übergibt den Barbetrag 
+     * und initialiesiert die Listener
+     *
+     * @param preis
+     */
+    public BarzahlungsWerkzeug(int preis)
     {
-        this._pvw = pvw;
-        this._vorstellung = vorstellung;
-
         this.preis = preis;
         barUI = new BarzahlungsWerkzeugUI();
         barUI.getBetragFeld()
@@ -55,7 +51,7 @@ public class BarzahlungsWerkzeug
             {
                 public void actionPerformed(ActionEvent e)
                 {
-                    success = false;
+                    _success = false;
                     barUI.getJd()
                         .dispose();
                 }
@@ -66,13 +62,18 @@ public class BarzahlungsWerkzeug
             {
                 public void actionPerformed(ActionEvent e)
                 {
+                    _success = true;
                     barUI.getJd()
                         .dispose();
-                    _pvw.verkaufePlaetze(_vorstellung);
                 }
             });
+
     }
 
+    /**
+     * Überprüft, ob der eingegebene Betrag größer oder gleich dem 
+     * Barbetrag ist, kein String und nicht negativ ist.
+     */
     public void changedBetragTextFeld()
     {
         barUI.getOkButton()
@@ -103,14 +104,17 @@ public class BarzahlungsWerkzeug
         }
     }
 
-    public boolean getSuccess()
+    /*
+     * Ausgelagerte get-Methoden
+     */
+    public void uiZeigen()
     {
-        return success;
+        barUI.uiZeigen();
     }
 
-    public boolean isFinished()
+    public boolean getSuccess()
     {
-        return isFinished;
+        return _success;
     }
 
     public JButton getOkButton()

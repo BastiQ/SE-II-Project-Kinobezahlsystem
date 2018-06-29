@@ -12,6 +12,10 @@ import javax.swing.JTextField;
 
 public class BarzahlungsWerkzeugUI
 {
+
+    /**
+     * Zustandsvariablen für die Komponenten des UI-Fensters
+     */
     private JDialog jd;
     private JTextField betragFeld;
     private JTextField bezahltFeld;
@@ -19,11 +23,13 @@ public class BarzahlungsWerkzeugUI
     private JButton okButton;
     private JButton abbrechenButton;
 
+    /**
+     * Konstruktor konstruiert die UI mit einem Boxlayout 
+     */
     public BarzahlungsWerkzeugUI()
     {
         jd = new JDialog();
         jd.setSize(500, 500);
-        jd.setVisible(true);
         jd.setModalityType(ModalityType.APPLICATION_MODAL);
 
         JPanel pane = new JPanel();
@@ -58,6 +64,18 @@ public class BarzahlungsWerkzeugUI
             .add(pane, BorderLayout.CENTER);
     }
 
+    /**
+     * Setzt den JDialog auf visible. Dies darf erst als letztes geschehen damit die Modularität
+     * richtig greift.
+     */
+    public void uiZeigen()
+    {
+        this.jd.setVisible(true);
+    }
+
+    /**
+     * Die ausgelagerten get-Methoden für die UI-Elemente
+     */
     public JTextField getBetragFeld()
     {
         return betragFeld;
